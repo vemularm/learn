@@ -1,0 +1,43 @@
+{
+  "name": "my-express-app",
+  "version": "1.0.0",
+  "description": "Simple Express backend app with tests",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "mocha --reporter spec"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
+    "supertest": "^6.3.3",
+    "eslint": "^8.57.0",
+    "mocha-junit-reporter": "^2.2.0"
+  },
+  "eslintConfig": {
+    "env": {
+      "node": true,
+      "es2021": true,
+      "mocha": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+      "ecmaVersion": "latest"
+    },
+    "rules": {
+      "semi": ["error", "always"],
+      "quotes": ["error", "single"],
+      "no-unused-vars": ["warn"],
+      "no-console": ["warn"],
+      "indent": ["warn", 2],
+      "curly": ["error", "all"],
+      "eqeqeq": ["error", "always"],
+      "no-var": ["error"],
+      "prefer-const": ["warn"],
+      "comma-dangle": ["error", "never"]
+    }
+  }
+}
