@@ -46,3 +46,13 @@ jobs:
         with:
           name: eslint-code-quality-artifact
           path: lint-report.txt
+
+      - name: run dependency scanning
+        run: npm audit --audit-level=high --json > npm-audit-report.json
+
+      - name: publish dependency scanning results
+        if: always()
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: dependency-artifact
+          path: npm-audit-report.json
