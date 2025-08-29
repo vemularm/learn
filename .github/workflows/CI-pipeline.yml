@@ -1,4 +1,4 @@
-name:CI Pipeline with Security & Qauality Scans
+name: CI Pipeline with Security & Qauality Scans
 
 on:
   push:
