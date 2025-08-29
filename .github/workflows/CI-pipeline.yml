@@ -27,3 +27,9 @@ jobs:
         run: |
           mkdir -p test-results
           npm test -- --reporter mocha-junit-reporter --reporter-options mochaFile=./test-results/results.xml
+
+      - name: publish test results
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: test-results-artifact
+          path: test-results/results.xml
