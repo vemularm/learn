@@ -29,6 +29,7 @@ jobs:
           npm test -- --reporter mocha-junit-reporter --reporter-options mochaFile=./test-results/results.xml
 
       - name: publish test results
+        if: always()
         uses: actions/upload-artifact@v4.6.2
         with:
           name: test-results-artifact
