@@ -1,0 +1,58 @@
+name: CI Pipeline with Security & Qauality Scans
+
+on:
+  push:
+    branches: [dev]
+  pull_request:
+    branches: [dev]
+
+jobs:
+  buildandtest:
+    runs-on: ubuntu-latest
+
+    steps:
+      # checkout code from the dev branch
+      - name: checkout code
+        uses: actions/checkout@v5.0.0
+
+      - name: setup node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: install dependencies
+        run: npm install
+
+      - name: run tests
+        run: |
+          mkdir -p test-results
+          npm test -- --reporter mocha-junit-reporter --reporter-options mochaFile=./test-results/results.xml
+
+      - name: publish test results
+        if: always()
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: test-results-artifact
+          path: test-results/results.xml
+
+      - name: run code quality using eslint
+        run: |
+          set -o pipefail
+          npx eslint . --ext .js --exit-on-fatal-error -f stylish | tee lint-report.txt
+
+      - name: publish eslint code qualtiy results
+        if: always()
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: eslint-code-quality-artifact
+          path: lint-report.txt
+
+      - name: run dependency scanning
+        run: npm audit --audit-level=high --json > npm-audit-report.json
+
+      - name: publish dependency scanning results
+        if: always()
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: dependency-artifact
+          path: npm-audit-report.json
